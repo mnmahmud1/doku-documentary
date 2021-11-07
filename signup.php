@@ -11,9 +11,9 @@
         <div class="col-sm-7">
             <div class="mt-5">
                 <h3 class="fw-bold">Sign up</h3>
-                <p>Have account? <a href="#" class="text-decoration-none linkOrange">Log in</a> </p>
+                <p>Have an account? <a href="login.php" class="text-decoration-none linkOrange">Log in</a> </p>
             </div>
-            <div class="card shadow-lg border-0 py-3 px-3">
+            <div class="card shadow-lg border-0 py-4 px-3">
                 <div class="card-body">
                     <form action="includes/functionInstance.php" method="post">
                         <div class="mb-4">
@@ -46,7 +46,7 @@
                         </div>
                         
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-1" name="signup" id="signup" disabled=true>Sign up</button>
+                            <button type="submit" class="btn btn-1" name="signup" id="signup">Sign up</button>
                         </div>
                     </form>
                 </div>
@@ -58,14 +58,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
-    $("#password, #repassword").on("keyup", function () {
-        if ($("#password").val() == "" && $("#repassword").val() == "") {
-            // $("#signup").prop("disabled", true);
-        } else if ($("#password").val() == $("#repassword").val()) {
-            $("#signup").removeProp("disabled");
-        } else {
-            // $("#signup").prop("disabled", true);
-        }
+    $(document).ready(function() {
+        $(':input[type="submit"]').prop('disabled', true);
+
+        $('#password, #repassword').keyup(function() {
+            if($("#password").val() == "" && $("#repassword").val() == "") {
+                $(':input[type="submit"]').prop('disabled', true);
+            } else if ($("#password").val() == $("#repassword").val()) {
+                $(':input[type="submit"]').prop('disabled', false);
+            } else {
+                $("#signup").prop("disabled", true);
+            }
+        });
     });
 </script>
 
