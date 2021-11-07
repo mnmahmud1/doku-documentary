@@ -7,6 +7,11 @@
     color: #93370d;
 }
 
+.linkOrange:hover {
+    font-weight: bold;
+    color: #fec84b;
+}
+
 .form-control {
     border: 1.5px solid #e5e5e5;
     height: 50px;
