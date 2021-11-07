@@ -1,3 +1,3 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "docu_db");
+$conn = mysqli_connect("localhost", "root", "", "doku_db");
