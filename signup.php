@@ -11,24 +11,24 @@
         <div class="col-sm-7">
             <div class="mt-5">
                 <h3 class="fw-bold">Sign up</h3>
-                <p>Have an account? <a href="login.php" class="text-decoration-none linkOrange">Log in</a> </p>
+                <p>Have an account? <a href="signin.php" class="text-decoration-none linkOrange">Log in</a> </p>
             </div>
             <div class="card shadow-lg border-0 py-4 px-3">
                 <div class="card-body">
                     <form action="includes/functionInstance.php" method="post">
                         <div class="mb-4">
                             <label for="instansName" class="form-label">Instance Name</label>
-                            <input type="text" name="instansName" id="instansName" class="form-control" placeholder="Type your instance name" maxlength="30" autofocus required>
+                            <input type="text" name="instansName" id="instansName" class="form-control" placeholder="Type your instance name" autocomplete="off" maxlength="50" autofocus required>
                         </div>
                         <div class="mb-4">
                             <label for="email" class="form-label">Email</label>
-                            <input type="mail" name="email" id="email" class="form-control" placeholder="Type your mail" required>
+                            <input type="mail" name="email" id="email" class="form-control" placeholder="Type your mail" autocomplete="off" maxlength="50" required>
                         </div>
                         <div class="row">
                             <div class="col-sm-5">
                                 <div class="mb-4">
                                     <label for="username" class="form-label">Username</label>
-                                    <input type="text" name="username" id="username" class="form-control" maxlength="30" placeholder="Create username" required>
+                                    <input type="text" name="username" id="username" class="form-control" maxlength="30" autocomplete="off" placeholder="Create username" required>
                                 </div>
                             </div>
                             <div class="col-sm">

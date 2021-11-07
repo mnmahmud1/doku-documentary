@@ -19,6 +19,13 @@
     border-radius: 10px;
 }
 
+.form-select {
+    border: 1.5px solid #e5e5e5 !important;
+    height: 50px !important;
+    box-shadow: 0px 4px 4px rgba(219, 226, 234, 0.25) !important;
+    border-radius: 10px !important;
+}
+
 .btn-1 {
     background-color: #fec84b;
     color: #93370d;
@@ -26,4 +33,22 @@
     font-weight: bold;
     height: 50px;
     border-radius: 10px;
+}
+
+.btn-1:hover {
+    color: #93370d;
+    background-color: #ffd779;
+}
+
+.btn-2 {
+    background-color: #fff;
+    color: #f04438;
+    font-weight: bold;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.btn-2:hover {
+    background-color: #fef3f2;
+    color: #b42318;
 }
