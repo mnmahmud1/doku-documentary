@@ -1,8 +1,10 @@
-<?php $doc = ["title" => "Doku - Dashboard"] ?>
+<?php $doc = ["title" => "Doku - Members"] ?>
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+
 <link href="includes/css/styles.css" rel="stylesheet" />
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -37,12 +39,12 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link active" href="index.php">
+                    <a class="nav-link" href="index.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
                     <div class="sb-sidenav-menu-heading">Interface</div>
-                    <a class="nav-link" href="members.php">
+                    <a class="nav-link active" href="members.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Members
                     </a>
@@ -71,20 +73,61 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="container-fluid px-4">
+            <div class="container px-4">
                 <div class="row">
                     <h2 class="mt-5 fw-semibold">Dashboard</h2>
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Daftar Anggota</li>
+                            <li class="breadcrumb-item active" aria-current="page">Members</li>
                         </ol>
                     </nav>
                 </div>
                 
             </div>
-            <div class="row">
-                <!-- Content -->
+            <div class="container px-4 mt-4">
+                <div class="row">
+                    <!-- Content -->
+                    <div class="dropdown">
+                        <a class="btn btn-warning fw-bold dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Groups
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card shadow mt-5 mb-3 py-3">
+                    <div class="card-body px-4">
+                        <table id="memberData" class="display">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                    <th>Document Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Row 1 Data 2</td>
+                                    <td>Row 1 Data 2</td>
+                                    <td>Row 1 Data 2</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Row 2 Data 1</td>
+                                    <td>Row 2 Data 1</td>
+                                    <td>Row 2 Data 2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
@@ -102,6 +145,13 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script src="includes/js/scripts.js"></script>
+<script>
+    $(document).ready(function (){
+        $('#memberData').DataTable();
+    })
+</script>
 
 <?php require "includes/php/footer.php" ?>
