@@ -1,0 +1,55 @@
+.card {
+    border-radius: 10px !important;
+}
+
+.linkOrange {
+    font-weight: bold;
+    color: #93370d;
+}
+
+.linkOrange:hover {
+    font-weight: bold;
+    color: #fec84b;
+}
+
+.form-control {
+    border: 1.5px solid #e5e5e5;
+    box-shadow: 0px 4px 4px rgba(219, 226, 234, 0.25);
+    border-radius: 10px;
+}
+
+.linkOrange700 {
+    font-weight: 700;
+    color: #93370d;
+}
+
+.form-select {
+    border: 1.5px solid #fec84b !important;
+    box-shadow: 0px 4px 4px rgba(219, 226, 234, 0.25) !important;
+    border-radius: 10px !important;
+}
+
+.btn-1 {
+    background-color: #fec84b;
+    color: #93370d;
+    box-shadow: 0px 4px 4px rgba(253, 176, 34, 0.25);
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.btn-1:hover {
+    color: #93370d;
+    background-color: #ffd779;
+}
+
+.btn-2 {
+    background-color: #fff;
+    color: #f04438;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.btn-2:hover {
+    background-color: #fef3f2;
+    color: #b42318;
+}

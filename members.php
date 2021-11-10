@@ -5,20 +5,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 
 <link href="includes/css/styles.css" rel="stylesheet" />
+<link href="includes/css/admin.css" rel="stylesheet" />
 <script src="https://kit.fontawesome.com/b676a664d2.js" crossorigin="anonymous"></script>
-
-<style>
-    .linkOrange700 {
-        font-weight: 700;
-        color: #93370d;
-    }
-
-    .form-select {
-        border: 1.5px solid #fec84b !important;
-        box-shadow: 0px 4px 4px rgba(219, 226, 234, 0.25) !important;
-        border-radius: 10px !important;
-    }
-</style>
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
@@ -88,7 +76,7 @@
         <main>
             <div class="container-fluid px-4">
                 <div class="row">
-                    <h2 class="mt-5 fw-semibold">Members</h2>
+                    <h2 class="mt-5 fw-bold">Members</h2>
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">Dashboard</li>
@@ -109,7 +97,7 @@
                                     <option value="">1</option>
                                     <option value="">2</option>
                                 </select>
-                                <button type="submit" class="btn btn-warning fw-bold">Set</button>
+                                <button type="submit" class="btn btn-1">Set</button>
                             </form>
                         </div>
                     </div>
@@ -120,7 +108,7 @@
                                 <i class="fas fa-plus"></i>
                                 Add
                             </button>
-                            <button type="button" class="btn bg-white linkOrange700">
+                            <button type="button" id="importMember" class="btn bg-white linkOrange700">
                                 <i class="fas fa-file-import"></i>
                                 Imports
                             </button>
@@ -130,7 +118,7 @@
 
                 <div class="card shadow mt-3 mb-3 py-3">
                     <div class="card-body px-4">
-                        <table id="memberData" class="display">
+                        <table id="memberData" class="display table-responsive">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -148,7 +136,7 @@
                                     <td>Row 1 Data 2</td>
                                     <td>
                                         <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Detail</button>
-                                        <button onclick="return validation('Yakin ingin menghapus?', 'detailMember.php')" class="btn btn-sm bg-light text-danger">Delete</button>
+                                        <button onclick="return del('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -158,7 +146,7 @@
                                     <td>Row 2 Data 1</td>
                                     <td>
                                         <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Detail</button>
-                                        <button onclick="return validation('Yakin ingin menghapus?', 'detailMember.php')" class="btn btn-sm bg-light text-danger">Delete</button>
+                                        <button onclick="return del('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -183,17 +171,8 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script src="includes/js/scripts.js"></script>
-<script>
-    $(document).ready(function (){
-        $('#memberData').DataTable();
-    })
-
-    function validation(msg, page){
-        if(confirm(msg)){
-            window.location.href = page;
-        }
-    }
-</script>
+<script src="includes/js/admin.js"></script>
 <?php require "includes/php/footer.php" ?>

@@ -2,7 +2,8 @@
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/b676a664d2.js" crossorigin="anonymous"></script>
+<link href="includes/css/admin.css" rel="stylesheet" />
 <link href="includes/css/styles.css" rel="stylesheet" />
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -73,7 +74,7 @@
         <main>
             <div class="container-fluid px-4">
                 <div class="row">
-                    <h2 class="mt-5 fw-semibold">Dashboard</h2>
+                    <h2 class="mt-5 fw-bold">Dashboard</h2>
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">Dashboard</li>
