@@ -2,10 +2,11 @@
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 
 <link href="includes/css/styles.css" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/b676a664d2.js" crossorigin="anonymous"></script>
+
 <style>
     .linkOrange700 {
         font-weight: 700;
@@ -87,7 +88,7 @@
         <main>
             <div class="container-fluid px-4">
                 <div class="row">
-                    <h2 class="mt-5 fw-semibold">Dashboard</h2>
+                    <h2 class="mt-5 fw-semibold">Members</h2>
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">Dashboard</li>
@@ -115,8 +116,14 @@
                     <div class="col-sm"></div>
                     <div class="col-sm">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-light linkOrange700 me-2">Add</button>
-                            <button type="button" class="btn bg-white linkOrange700">Imports</button>
+                            <button type="button" class="btn btn-light linkOrange700 me-2">
+                                <i class="fas fa-plus"></i>
+                                Add
+                            </button>
+                            <button type="button" class="btn bg-white linkOrange700">
+                                <i class="fas fa-file-import"></i>
+                                Imports
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -127,23 +134,32 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Code</th>
                                     <th>Name</th>
-                                    <th>Action</th>
                                     <th>Document Details</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>1</td>
+                                    <td>AHJB72</td>
                                     <td>Row 1 Data 2</td>
                                     <td>Row 1 Data 2</td>
-                                    <td>Row 1 Data 2</td>
+                                    <td>
+                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Detail</button>
+                                        <button onclick="return validation('Yakin ingin menghapus?', 'detailMember.php')" class="btn btn-sm bg-light text-danger">Delete</button>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
+                                    <td>ASD123</td>
                                     <td>Row 2 Data 1</td>
                                     <td>Row 2 Data 1</td>
-                                    <td>Row 2 Data 2</td>
+                                    <td>
+                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Detail</button>
+                                        <button onclick="return validation('Yakin ingin menghapus?', 'detailMember.php')" class="btn btn-sm bg-light text-danger">Delete</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -173,6 +189,11 @@
     $(document).ready(function (){
         $('#memberData').DataTable();
     })
-</script>
 
+    function validation(msg, page){
+        if(confirm(msg)){
+            window.location.href = page;
+        }
+    }
+</script>
 <?php require "includes/php/footer.php" ?>

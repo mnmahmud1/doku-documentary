@@ -1,9 +1,10 @@
-<?php $doc = ["title" => "Doku - Dashboard"] ?>
+<?php $doc = ["title" => "Doku - Member Details"] ?>
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/b676a664d2.js" crossorigin="anonymous"></script>
 <link href="includes/css/styles.css" rel="stylesheet" />
+<link rel="stylesheet" href="includes/css/form.css">
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
@@ -73,21 +74,76 @@
         <main>
             <div class="container-fluid px-4">
                 <div class="row">
-                    <h2 class="mt-5 fw-semibold">Dashboard</h2>
+                    <h2 class="mt-5 fw-semibold">Member Details</h2>
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item" aria-current="page">Members</li>
-                            <li class="breadcrumb-item active" aria-current="page">Details Member</li>
+                            <li class="breadcrumb-item active" aria-current="page">Member Details</li>
                         </ol>
                     </nav>
                 </div>
-                
             </div>
-            <div class="row">
-                <!-- Content -->
+            <div class="container-fluid px-4">
+                <div class="row">
+                    <!-- Member Details -->
+                    <h4 class="mt-4 mb-3">
+                        <i class="fas fa-user me-2"></i>
+                        Identity
+                    </h4>
+                    <div class="col-sm-2">
+                        Member Code
+                        <p class="fw-bold">MA1235</p>
+                    </div>
+                    <div class="col-sm-2">
+                        Group
+                        <p class="fw-bold">XI TKJ 2</p>
+                    </div>
+                    <div class="col-sm">
+                        Member Name
+                        <p class="fw-bold">M Nurhasan Mahmudi</p>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <!-- Content -->
+                    <form id="formVerification" action="includes/php/functionPublic.php" method="post" enctype="multipart/form-data">
+                        
+                        <!-- Documents Details -->
+                        <h4 class="mt-4 mt-5 mb-3">
+                            <i class="fas fa-file me-2"></i>
+                            Documents
+                        </h4>
+                        
+                        <!-- Document Upload -->
+                        <div class="row mb-3">
+                            <div class="col-sm-4 mb-4">
+                                <p>Photo Ijazah (asli) <a href="#" class="linkOrange">Lihat</a></p> 
+                                <input type="file" name="unique" id="unique" class="form-control">
+                            </div>
+                            <div class="col-sm-4 mb-4">
+                                <p>Photo Ijazah (asli) <a href="#" class="linkOrange">Lihat</a></p> 
+                                <input type="file" name="unique" id="unique" class="form-control">
+                            </div>
+                            <div class="col-sm-4 mb-4">
+                                <p>Photo Ijazah (asli) <a href="#" class="linkOrange">Lihat</a></p> 
+                                <input type="file" name="unique" id="unique" class="form-control">
+                            </div>
+                            <div class="col-sm-4 mb-4">
+                                <p>Photo Ijazah (asli) <a href="#" class="linkOrange">Lihat</a></p> 
+                                <input type="file" name="unique" id="unique" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-2 me-4" onclick="window.location.href = 'members.php'">Cancel</button>
+                            <button type="submit" class="btn btn-1">Save Changes</button>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </main>
+
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
