@@ -6,6 +6,18 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 
 <link href="includes/css/styles.css" rel="stylesheet" />
+<style>
+    .linkOrange700 {
+        font-weight: 700;
+        color: #93370d;
+    }
+
+    .form-select {
+        border: 1.5px solid #fec84b !important;
+        box-shadow: 0px 4px 4px rgba(219, 226, 234, 0.25) !important;
+        border-radius: 10px !important;
+    }
+</style>
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
@@ -73,7 +85,7 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="container px-4">
+            <div class="container-fluid px-4">
                 <div class="row">
                     <h2 class="mt-5 fw-semibold">Dashboard</h2>
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -85,22 +97,31 @@
                 </div>
                 
             </div>
-            <div class="container px-4 mt-4">
+            <div class="container-fluid px-4 mt-4">
                 <div class="row">
                     <!-- Content -->
-                    <div class="dropdown">
-                        <a class="btn btn-warning fw-bold dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Groups
-                        </a>
-
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                    <div class="col-sm-4">
+                        <form action="" method="post">
+                            <div class="d-flex">
+                                <select name="groups" id="groups" required class="form-select me-3">
+                                    <option value="">All Grroups</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                </select>
+                                <button type="submit" class="btn btn-warning fw-bold">Set</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm"></div>
+                    <div class="col-sm">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-light linkOrange700 me-2">Add</button>
+                            <button type="button" class="btn bg-white linkOrange700">Imports</button>
+                        </div>
                     </div>
                 </div>
-                <div class="card shadow mt-5 mb-3 py-3">
+
+                <div class="card shadow mt-3 mb-3 py-3">
                     <div class="card-body px-4">
                         <table id="memberData" class="display">
                             <thead>
