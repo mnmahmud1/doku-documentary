@@ -1,4 +1,4 @@
-<?php $doc = ["title" => "Doku - Members"] ?>
+<?php $doc = ["title" => "Doku - Documents"] ?>
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
 
@@ -45,19 +45,19 @@
                         Dashboard
                     </a>
                     <div class="sb-sidenav-menu-heading">Interface</div>
-                    <a class="nav-link active" href="members.php">
+                    <a class="nav-link" href="members.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Members
                     </a>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <a class="nav-link active show" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="true" aria-controls="collapseLayouts">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                         Category
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <div class="collapse show" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="groups.php">Groups</a>
-                            <a class="nav-link" href="documents.php">Documents</a>
+                            <a class="nav-link active" href="documents.php">Documents</a>
                         </nav>
                     </div>
                     <a class="nav-link" href="#">
@@ -76,11 +76,11 @@
         <main>
             <div class="container-fluid px-4">
                 <div class="row">
-                    <h2 class="mt-5 fw-bold">Members</h2>
+                    <h2 class="mt-5 fw-bold">Documents</h2>
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">Dashboard</li>
-                            <li class="breadcrumb-item active" aria-current="page">Members</li>
+                            <li class="breadcrumb-item active" aria-current="page">Documents</li>
                         </ol>
                     </nav>
                 </div>
@@ -89,34 +89,12 @@
             <div class="container-fluid px-4 mt-4">
                 <div class="row">
                     <!-- Content -->
-                    <div class="col-sm-4">
-                        <form action="" method="post">
-                            <div class="d-flex">
-                                <select name="groups" id="groups" required class="form-select me-3">
-                                    <option value="">All Groups</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                </select>
-                                <button type="submit" class="btn btn-1 me-3">Set</button>
-                                <button type="button" onclick="print()" class="btn bg-white linkOrange700">
-                                    <i class="fas fa-print"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-sm"></div>
-                    <div class="col-sm">
-                        <div class="d-flex justify-content-end">
-                            <!-- Button trigger modal add member -->
-                            <button type="button" class="btn btn-light linkOrange700 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <i class="fas fa-plus"></i>
-                                Add
-                            </button>
-                            <button type="button" id="importMember" class="btn bg-white linkOrange700">
-                                <i class="fas fa-file-import"></i>
-                                Imports
-                            </button>
-                        </div>
+                    <div class="d-flex justify-content-end">
+                        <!-- Button trigger modal add member -->
+                        <button type="button" class="btn btn-light linkOrange700 px-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fas fa-plus"></i>
+                            Add
+                        </button>
                     </div>
                 </div>
 
@@ -126,30 +104,27 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Code</th>
                                     <th>Name</th>
-                                    <th>Document Details</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>AHJB72</td>
-                                    <td>Row 1 Data 2</td>
-                                    <td>Row 1 Data 2</td>
+                                    <td>Group 1</td>
+                                    <td>Description 1</td>
                                     <td>
-                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Detail</button>
+                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Change</button>
                                         <button onclick="return del('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>ASD123</td>
-                                    <td>Row 2 Data 1</td>
-                                    <td>Row 2 Data 1</td>
+                                    <td>Group 2</td>
+                                    <td>Description 2</td>
                                     <td>
-                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Detail</button>
+                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Change</button>
                                         <button onclick="return del('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
                                     </td>
                                 </tr>
@@ -180,27 +155,23 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header px-4 border-0">
-                <h5 class="modal-title" id="exampleModalLabel">Add Member</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Documents</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="functionAdmin.php" method="post">
                 <div class="modal-body px-4">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" id="name" class="form-control" maxlength="50" placeholder="Type new member name" autocomplete="off" required>
+                        <label for="name" class="form-label">Group Name</label>
+                        <input type="text" name="name" id="name" class="form-control" maxlength="50" placeholder="Type new group name" autocomplete="off" required>
                     </div>
                     <div class="mb-3">
-                        <label for="group" class="form-label">Group</label>
-                        <select name="group" id="group" class="form-select" required>
-                            <option value="">Choose</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
+                        <label for="name" class="form-label">Group Name</label>
+                        <input type="text" name="name" id="name" class="form-control" maxlength="50" placeholder="Type description" autocomplete="off" required>
                     </div>
                 </div>
                 <div class="modal-footer px-4 border-0">
                     <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="addMember" id="addMember" class="btn btn-1 px-3">
+                    <button type="submit" name="addGroup" id="addGroup" class="btn btn-1 px-3">
                         Add
                     </button>
                 </div>
