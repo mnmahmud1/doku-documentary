@@ -161,17 +161,17 @@
             <form action="functionAdmin.php" method="post">
                 <div class="modal-body px-4">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Group Name</label>
+                        <label for="name" class="form-label">Documents Name</label>
                         <input type="text" name="name" id="name" class="form-control" maxlength="50" placeholder="Type new group name" autocomplete="off" required>
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Group Name</label>
-                        <input type="text" name="name" id="name" class="form-control" maxlength="50" placeholder="Type description" autocomplete="off" required>
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" name="description" id="description" class="form-control" maxlength="50" placeholder="Type description" autocomplete="off" required>
                     </div>
                 </div>
                 <div class="modal-footer px-4 border-0">
                     <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="addGroup" id="addGroup" class="btn btn-1 px-3">
+                    <button type="submit" name="addDocument" id="addDocument" class="btn btn-1 px-3">
                         Add
                     </button>
                 </div>
