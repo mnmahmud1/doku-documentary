@@ -97,7 +97,10 @@
                                     <option value="">1</option>
                                     <option value="">2</option>
                                 </select>
-                                <button type="submit" class="btn btn-1">Set</button>
+                                <button type="submit" class="btn btn-1 me-3">Set</button>
+                                <button type="button" onclick="print()" class="btn bg-white linkOrange700">
+                                    <i class="fas fa-print"></i>
+                                </button>
                             </form>
                         </div>
                     </div>
