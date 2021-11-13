@@ -54,8 +54,8 @@
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="#">Groups</a>
-                            <a class="nav-link" href="#">Documents</a>
+                            <a class="nav-link" href="groups.php">Groups</a>
+                            <a class="nav-link" href="documents.php">Documents</a>
                         </nav>
                     </div>
                     <a class="nav-link" href="#">
