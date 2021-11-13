@@ -8,7 +8,7 @@
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3 fw-bold" href="index.html">Doku</a>
+    <a class="navbar-brand ps-3 fw-bold" href="index.php">Doku</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
@@ -24,10 +24,9 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Settings</a></li>
-                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><button class="dropdown-item" onclick="return alertModal('functionAdmin.php?logout=1', 'Logout', 'If you logout maybe any data cant be saved!')">Logout</button></li>
             </ul>
         </li>
     </ul>
@@ -44,11 +43,11 @@
                     </a>
                     <div class="sb-sidenav-menu-heading">Interface</div>
                     <a class="nav-link active" href="members.php">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                         Members
                     </a>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-clone"></i></div>
                         Category
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -59,7 +58,7 @@
                         </nav>
                     </div>
                     <a class="nav-link" href="#">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
                         History
                     </a>
                 </div>
@@ -146,13 +145,8 @@
 
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp; Conditions</a>
-                    </div>
+                <div class="d-flex align-items-center justify-content-start small">
+                    <div class="text-muted">Copyright &copy; Doku 2021</div>
                 </div>
             </div>
         </footer>

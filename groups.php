@@ -10,7 +10,7 @@
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3 fw-bold" href="index.html">Doku</a>
+    <a class="navbar-brand ps-3 fw-bold" href="index.php">Doku</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
@@ -45,11 +45,11 @@
                     </a>
                     <div class="sb-sidenav-menu-heading">Interface</div>
                     <a class="nav-link" href="members.php">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                         Members
                     </a>
                     <a class="nav-link active show" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="true" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-clone"></i></div>
                         Category
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -60,7 +60,7 @@
                         </nav>
                     </div>
                     <a class="nav-link" href="#">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
                         History
                     </a>
                 </div>
@@ -132,13 +132,8 @@
         </main>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp; Conditions</a>
-                    </div>
+                <div class="d-flex align-items-center justify-content-start small">
+                    <div class="text-muted">Copyright &copy; Doku 2021</div>
                 </div>
             </div>
         </footer>
