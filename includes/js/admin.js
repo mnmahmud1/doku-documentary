@@ -2,17 +2,17 @@ $(document).ready(function () {
     $("#memberData").DataTable();
 });
 
-function del(page) {
+function alertModal(page, button = "Delete", msg = "Once deleted, you will not be able to recover this imaginary file!") {
     swal({
         title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this imaginary file!",
+        text: msg,
         icon: "warning",
-        buttons: ["Cancel", "Delete"],
+        buttons: ["Cancel", button],
         dangerMode: true,
     }).then(willDelete => {
         if (willDelete) {
             swal("Successfull", {
-                title: "Delete has successfully",
+                title: button + " has successfully",
                 icon: "success",
                 buttons: false,
             });

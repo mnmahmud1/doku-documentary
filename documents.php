@@ -26,10 +26,9 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Settings</a></li>
-                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><button class="dropdown-item" onclick="return alertModal('functionAdmin.php?logout=1', 'Logout', 'If you logout maybe any data cant be saved!')">Logout</button></li>
             </ul>
         </li>
     </ul>
@@ -125,7 +124,7 @@
                                     <td>Description 2</td>
                                     <td>
                                         <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Change</button>
-                                        <button onclick="return del('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
+                                        <button onclick="return alertModal('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
