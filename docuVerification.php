@@ -75,6 +75,11 @@
                                 <input type="text" name="editor" id="editor" class="form-control" placeholder="Type your name" required>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="information" class="form-label">Additional information</label>
+                                <textarea name="information" id="information" style="height: 5rem" class="form-control" placeholder="Add your additional information"></textarea>
+                            </div>
+
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-2 me-4" onclick="window.location.href = 'signin.php'">Cancel</button>
                                 <button type="submit" class="btn btn-1">Save Changes</button>
