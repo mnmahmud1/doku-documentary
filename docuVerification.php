@@ -87,7 +87,7 @@
 
                         </form>
                     <?php else : ?>
-                        <p id="msg" class="text-center mb-0 mt-4">Please contact your instance administrator for get a member code</p>
+                        <p id="msg" class="text-center mb-0 mt-4">Please contact your instance administrator for get a member code!</p>
                     <?php endif ?>
                         
                 </div>

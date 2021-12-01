@@ -10,10 +10,10 @@
     <div class="row justify-content-center">
         <div class="col-sm-7">
             <div class="mt-5">
-                <h3 class="fw-bold">Sign up to Doku</h3>
+                <h3 class="fw-bold">New Account</h3>
                 <p>Have an account? <a href="signin.php" class="text-decoration-none linkOrange">Log in</a> </p>
             </div>
-            <div class="card shadow-lg border-0 py-4 px-3">
+            <div class="card shadow border-0 py-4 px-3">
                 <div class="card-body">
                     <form action="includes/functionInstance.php" method="post">
                         <div class="mb-4">

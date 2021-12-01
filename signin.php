@@ -11,11 +11,11 @@
         <div class="col-sm-4">
             <div class="mt-5">
                 <h3 class="fw-bold">Sign in to Doku</h3>
-                <p>Don't have account? <a href="signup.php" class="text-decoration-none linkOrange">Sign Up</a> </p>
+                <p>Don't have account? <a href="signup.php" class="text-decoration-none linkOrange">Create an account.</a> </p>
             </div>
-            <div class="card shadow-lg border-0 py-4 px-3">
+            <div class="card shadow border-0 py-4 px-3">
                 <div class="card-body">
-                    <form action="includes/functionInstance.php" method="post">
+                    <form action="includes/php/functionInstance.php" method="post">
                         <div class="mb-4">
                             <label for="username" class="form-label fw-bolder">Username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="Type your username" maxlength="30" autofocus required>
@@ -23,12 +23,6 @@
                         <div class="mb-4">
                             <label for="password" class="form-label fw-bolder">Password</label>
                             <input type="password" name="password" id="password" class="form-control" placeholder="Type your password" required>
-                        </div>
-                        <div class="form-check mb-4">
-                            <input class="form-check-input" type="checkbox" value="" name="remenberPass" id="remenberPass">
-                            <label class="form-check-label" for="remenberPass">
-                                Remember password
-                            </label>
                         </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-1" name="signin">Sign in</button>
