@@ -1,6 +1,15 @@
 <?php $doc = ["title" => "Doku - Members"] ?>
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
+<?php
+    if(!isset($_COOKIE["users"])){
+        echo "
+            <script>
+                window.location.href = 'signin.php';
+            </script>
+        ";
+    }
+?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 
@@ -28,7 +37,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><button class="dropdown-item" onclick="return alertModal('functionAdmin.php?logout=1', 'Logout', 'If you logout maybe any data cant be saved!')">Logout</button></li>
+                <li><button class="dropdown-item" onclick="return alertModal('includes/php/functionInstance.php?logout=1', 'Logout', 'If you logout maybe any data cant be saved!')">Logout</button></li>
             </ul>
         </li>
     </ul>
@@ -88,7 +97,7 @@
             <div class="container-fluid px-4 mt-4">
                 <div class="row">
                     <!-- Content -->
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-md-8 col-lg-5 mb-3">
                         <form action="" method="post">
                             <div class="d-flex">
                                 <select name="groups" id="groups" required class="form-select me-3">
@@ -103,8 +112,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-sm"></div>
-                    <div class="col-sm">
+                    <div class="col-sm col-lg">
                         <div class="d-flex justify-content-end">
                             <!-- Button trigger modal add member -->
                             <button type="button" class="btn btn-light linkOrange700 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">

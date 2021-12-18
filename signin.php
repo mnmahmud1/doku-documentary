@@ -1,6 +1,16 @@
 <?php $doc = ["title" => "Doku - Sign in"] ?>
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
+<?php
+    if(isset($_COOKIE["users"])){
+        echo "
+            <script>
+                window.location.href = 'index.php';
+            </script>
+        ";
+    }
+?>
+
 <link rel="stylesheet" href="includes/css/form.css">
 
 <!-- Body HTML -->
@@ -8,7 +18,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-4">
+        <div class="col-sm-8 col-md-6 col-lg-4">
             <div class="mt-5">
                 <h3 class="fw-bold">Sign in to Doku</h3>
                 <p>Don't have account? <a href="signup.php" class="text-decoration-none linkOrange">Create an account.</a> </p>
@@ -30,9 +40,15 @@
                     </form>
                 </div>
             </div>
-            <div class="alert rounded-pill alert-danger mt-4 text-center" role="alert">
-                Wrong username or password!
-            </div>
+            <?php if(isset($_COOKIE["log"]) && $_COOKIE["log"] == "failed") : ?>
+                <div class="alert rounded-pill alert-danger mt-4 text-center" role="alert">
+                    Wrong username or password!
+                </div>
+            <?php elseif(isset($_COOKIE["reg"]) && $_COOKIE["reg"] == "success") :  ?>
+                <div class="alert rounded-pill alert-success mt-4 text-center" role="alert">
+                    Successfully registered, sign in now!
+                </div>
+            <?php endif ?>
         </div>
     </div>
 </div>

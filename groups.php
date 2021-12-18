@@ -1,6 +1,15 @@
 <?php $doc = ["title" => "Doku - Groups"] ?>
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
+<?php
+    if(!isset($_COOKIE["users"])){
+        echo "
+            <script>
+                window.location.href = 'signin.php';
+            </script>
+        ";
+    }
+?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 
@@ -28,7 +37,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><button class="dropdown-item" onclick="return alertModal('functionAdmin.php?logout=1', 'Logout', 'If you logout maybe any data cant be saved!')">Logout</button></li>
+                <li><button class="dropdown-item" onclick="return alertModal('includes/php/functionInstance.php?logout=1', 'Logout', 'If you logout maybe any data cant be saved!')">Logout</button></li>
             </ul>
         </li>
     </ul>
