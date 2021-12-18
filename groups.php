@@ -9,6 +9,14 @@
             </script>
         ";
     }
+
+    //! check id user from cookie value
+    $checkUser = $_COOKIE["users"];
+    $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+    $idUser = $checkIdUser["id"];
+
+    $getGroups = mysqli_query($conn, "SELECT id, group_name FROM groups WHERE user_id = $idUser");
+    $i = 1;
 ?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
@@ -16,6 +24,8 @@
 <link href="includes/css/styles.css" rel="stylesheet" />
 <link href="includes/css/admin.css" rel="stylesheet" />
 <script src="https://kit.fontawesome.com/b676a664d2.js" crossorigin="anonymous"></script>
+
+
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
@@ -42,6 +52,30 @@
         </li>
     </ul>
 </nav>
+
+<?php if(isset($_COOKIE["add"]) || isset($_COOKIE["del"])) : ?>
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="position-absolute top-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Doku</strong>
+                    <small>Now</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <?php if(isset($_COOKIE["add"]) && $_COOKIE["add"] == "groupSuccess") : ?>
+                        <strong class="text-success">Successfully</strong> add new group.
+                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "groupSuccess") : ?>
+                        <strong class="text-success">Successfully</strong> delete group.
+                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "groupFailed") : ?>
+                        <strong  class="text-danger">Failed</strong> to delete group. Please try again!
+                    <?php endif ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif ?>
+
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -92,7 +126,6 @@
                         </ol>
                     </nav>
                 </div>
-                
             </div>
             <div class="container-fluid px-4 mt-4">
                 <div class="row">
@@ -108,33 +141,49 @@
 
                 <div class="card shadow mt-3 mb-3 py-3">
                     <div class="card-body px-4">
-                        <table id="memberData" class="display table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Group 1</td>
-                                    <td>
-                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Change</button>
-                                        <button onclick="return alertModal('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Group 2</td>
-                                    <td>
-                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Change</button>
-                                        <button onclick="return alertModal('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive-sm">
+                            <table id="memberData" class="stripe row-border hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($getGroups as $group) : ?>
+                                        <?php
+                                            $id = $group["id"];
+                                            ?>
+                                        <tr>
+                                            <td><?= $i ?></td>
+                                            <td><?= $group["group_name"] ?></td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-h"></i>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li>
+                                                            <a href="detailMember.php?id=<?= $id ?>" class="dropdown-item">
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <button onclick="return alertModal('includes/php/functionInstance.php?delGroup=<?= $id ?>')" class="dropdown-item">
+                                                                Delete
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php $i++ ?>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,11 +207,11 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add Group</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="functionAdmin.php" method="post">
+            <form action="includes/php/functionInstance.php" method="post">
                 <div class="modal-body px-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Group Name</label>
-                        <input type="text" name="name" id="name" class="form-control" maxlength="50" placeholder="Type new group name" autocomplete="off" required>
+                        <input type="text" name="name" id="name" class="form-control" maxlength="50" placeholder="Type new group name" required>
                     </div>
                 </div>
                 <div class="modal-footer px-4 border-0">
