@@ -1,6 +1,7 @@
 TODO :
 - buat values cookie user dengan beberapa digit dari enc password user
 - base_url()
+- mysqli_affected_rows()
 
 
 SUCCESS :

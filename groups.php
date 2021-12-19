@@ -51,11 +51,13 @@
     </ul>
 </nav>
 
+<!-- Toast Notification -->
 <?php if(isset($_COOKIE["add"]) || isset($_COOKIE["del"]) || isset($_COOKIE["edi"])) : ?>
     <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="position-absolute top-0 end-0 p-3" style="z-index: 11">
             <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
+                    <i class="fas fa-info-circle me-2"></i>
                     <strong class="me-auto">Doku</strong>
                     <small>Now</small>
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -156,7 +158,7 @@
                                     <?php $i = 1; foreach($getGroups as $group) : ?>
                                         <?php
                                             $id = $group["id"];
-                                            ?>
+                                        ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
                                             <td><?= $group["group_name"] ?></td>

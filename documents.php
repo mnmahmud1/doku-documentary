@@ -9,10 +9,17 @@
             </script>
         ";
     }
+
+    //! check id user from cookie value
+    $checkUser = $_COOKIE["users"];
+    $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+    $idUser = $checkIdUser["id"];
+
+    $getDocuments = mysqli_query($conn, "SELECT id, document_name, document_desc, group_id FROM documents WHERE user_id = $idUser");
+    $getGroups = mysqli_query($conn, "SELECT id, group_name FROM groups WHERE user_id = $idUser");
 ?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-
 <link href="includes/css/styles.css" rel="stylesheet" />
 <link href="includes/css/admin.css" rel="stylesheet" />
 
@@ -41,6 +48,36 @@
         </li>
     </ul>
 </nav>
+
+<!-- Toast Notification -->
+<?php if(isset($_COOKIE["add"]) || isset($_COOKIE["del"]) || isset($_COOKIE["edi"])) : ?>
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="position-absolute top-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong class="me-auto">Doku</strong>
+                    <small>Now</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <?php if(isset($_COOKIE["add"]) && $_COOKIE["add"] == "documentSuccess") : ?>
+                        <strong class="text-success">Successfully</strong> add new document.
+                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "documentSuccess") : ?>
+                        <strong class="text-success">Successfully</strong> delete document.
+                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "documentFailed") : ?>
+                        <strong  class="text-danger">Failed</strong> to delete document. Please try again!
+                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "documentSuccess") : ?>
+                        <strong  class="text-success">Successfully</strong> edit document.
+                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "documentFailed") : ?>
+                        <strong  class="text-danger">Failed</strong> to edit document. Please try again!
+                    <?php endif ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif ?>
+
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -91,7 +128,6 @@
                         </ol>
                     </nav>
                 </div>
-                
             </div>
             <div class="container-fluid px-4 mt-4">
                 <div class="row">
@@ -107,36 +143,59 @@
 
                 <div class="card shadow mt-3 mb-3 py-3">
                     <div class="card-body px-4">
-                        <table id="memberData" class="display table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Group 1</td>
-                                    <td>Description 1</td>
-                                    <td>
-                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Change</button>
-                                        <button onclick="return del('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Group 2</td>
-                                    <td>Description 2</td>
-                                    <td>
-                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Change</button>
-                                        <button onclick="return alertModal('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table id="memberData" class="stripe row-border hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>To Group</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i=1; foreach ($getDocuments as $document) : ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $document["document_name"] ?></td>
+                                            <td><?= $document["document_desc"] ?></td>
+                                            <?php
+                                                $id = $document["id"];
+                                                $idGroup = $document["group_id"];
+                                                $checkGroup = mysqli_fetch_assoc(mysqli_query($conn, "SELECT group_name FROM groups WHERE id = $idGroup")); 
+                                            ?>
+                                            <td><?= $checkGroup["group_name"] ?></td>
+                                            <td>
+                                                <div class="dropend">
+                                                    <button class="btn btn-white btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-h"></i>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li>
+                                                            <button type="button" class="dropdown-item" id="editGroupButton"
+                                                                data-bs-toggle="modal" data-bs-target="#myModal"
+                                                                data-name="<?= $document["document_name"] ?>"
+                                                                data-desc="<?= $document["document_desc"] ?>"
+                                                                data-groupid="<?= $document["group_id"] ?>"
+                                                                data-id="<?= $document["id"] ?>">
+                                                                Edit
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button onclick="return alertModal('includes/php/functionInstance.php?delDocument=<?= $id ?>')" class="dropdown-item">
+                                                                Delete
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,7 +211,7 @@
 </div>
 
 
-<!-- Modal Add User -->
+<!-- Modal Add Document -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -160,7 +219,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add Documents</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="functionAdmin.php" method="post">
+            <form action="includes/php/functionInstance.php" method="post">
                 <div class="modal-body px-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Documents Name</label>
@@ -169,6 +228,15 @@
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
                         <input type="text" name="description" id="description" class="form-control" maxlength="50" placeholder="Type description" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="group" class="form-label">To Group</label>
+                        <select type="text" name="group" id="group" class="form-select" required>
+                            <option value="">Choose</option>
+                            <?php foreach ($getGroups as $group) : ?>
+                                <option value="<?= $group['id'] ?>"><?= $group['group_name'] ?></option>
+                            <?php endforeach ?>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer px-4 border-0">
@@ -188,4 +256,6 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script src="includes/js/scripts.js"></script>
 <script src="includes/js/admin.js"></script>
+
+    
 <?php require "includes/php/footer.php" ?>
