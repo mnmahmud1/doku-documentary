@@ -1,1 +1,10 @@
+TODO :
 - buat values cookie user dengan beberapa digit dari enc password user
+- base_url()
+
+
+SUCCESS :
+- Edit modal dengan jquery dengan data-
+https://stackoverflow.com/questions/23368664/how-to-make-an-edit-user-form-inside-bootstrap-modal-using-jquery
+- whoops
+https://medium.com/@mhdnauvalazhar/menggunakan-whoops-sebagai-error-handler-php-88f89f0c408b

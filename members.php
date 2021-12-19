@@ -15,7 +15,6 @@
 
 <link href="includes/css/styles.css" rel="stylesheet" />
 <link href="includes/css/admin.css" rel="stylesheet" />
-<script src="https://kit.fontawesome.com/b676a664d2.js" crossorigin="anonymous"></script>
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->

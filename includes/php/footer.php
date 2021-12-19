@@ -2,6 +2,7 @@
         <script>
             $(document).ready(function(){
                 $(".preloader").fadeOut();
+                $(".toast").delay(5000).fadeOut();
             })
         </script>
     </body>

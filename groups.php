@@ -16,14 +16,12 @@
     $idUser = $checkIdUser["id"];
 
     $getGroups = mysqli_query($conn, "SELECT id, group_name FROM groups WHERE user_id = $idUser");
-    $i = 1;
 ?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 
 <link href="includes/css/styles.css" rel="stylesheet" />
 <link href="includes/css/admin.css" rel="stylesheet" />
-<script src="https://kit.fontawesome.com/b676a664d2.js" crossorigin="anonymous"></script>
 
 
 
@@ -53,7 +51,7 @@
     </ul>
 </nav>
 
-<?php if(isset($_COOKIE["add"]) || isset($_COOKIE["del"])) : ?>
+<?php if(isset($_COOKIE["add"]) || isset($_COOKIE["del"]) || isset($_COOKIE["edi"])) : ?>
     <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="position-absolute top-0 end-0 p-3" style="z-index: 11">
             <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -69,6 +67,10 @@
                         <strong class="text-success">Successfully</strong> delete group.
                     <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "groupFailed") : ?>
                         <strong  class="text-danger">Failed</strong> to delete group. Please try again!
+                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "groupSuccess") : ?>
+                        <strong  class="text-success">Successfully</strong> edit group.
+                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "groupFailed") : ?>
+                        <strong  class="text-danger">Failed</strong> to edit group. Please try again!
                     <?php endif ?>
                 </div>
             </div>
@@ -151,24 +153,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($getGroups as $group) : ?>
+                                    <?php $i = 1; foreach($getGroups as $group) : ?>
                                         <?php
                                             $id = $group["id"];
                                             ?>
                                         <tr>
-                                            <td><?= $i ?></td>
+                                            <td><?= $i++ ?></td>
                                             <td><?= $group["group_name"] ?></td>
                                             <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <div class="dropend">
+                                                    <button class="btn btn-white btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-h"></i>
                                                     </button>
 
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li>
-                                                            <a href="detailMember.php?id=<?= $id ?>" class="dropdown-item">
+                                                            <button type="button" class="dropdown-item" id="editGroupButton"
+                                                                data-bs-toggle="modal" data-bs-target="#myModal"
+                                                                data-name="<?= $group["group_name"] ?>"
+                                                                data-id="<?= $group["id"] ?>">
                                                                 Edit
-                                                            </a>
+                                                            </button>
                                                         </li>
                                                         <li>
                                                             <button onclick="return alertModal('includes/php/functionInstance.php?delGroup=<?= $id ?>')" class="dropdown-item">
@@ -179,7 +184,6 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <?php $i++ ?>
                                     <?php endforeach ?>
                                 </tbody>
                             </table>
@@ -199,7 +203,7 @@
 </div>
 
 
-<!-- Modal Add User -->
+<!-- Modal Add Group -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -225,9 +229,45 @@
     </div>
 </div>
 
+<!-- Modal Edit Group -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header px-4 border-0">
+                <h5 class="modal-title" id="myModalLabel">Edit Group</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="includes/php/functionInstance.php" method="post">
+                <div class="modal-body px-4">
+                    <div class="mb-3">
+                        <label for="nameEdit" class="form-label">Group Name</label>
+                        <input type="text" name="nameEdit" id="nameEdit" class="form-control" maxlength="50" placeholder="Edit group name" required>
+                        <input type="number" name="idEdit" id="idEdit" hidden>
+                    </div>
+                </div>
+                <div class="modal-footer px-4 border-0">
+                    <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" name="editGroup" id="editGroup" class="btn btn-1 px-3">
+                        Edit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script src="includes/js/scripts.js"></script>
 <script src="includes/js/admin.js"></script>
+<script>
+    $(document).on("click", "#editGroupButton", function (e) {
+        let id = $(this).data("id");
+        let name = $(this).data("name");
+        
+        $("#nameEdit").val(name);
+        $("#idEdit").val(id);
+    });
+</script>
 <?php require "includes/php/footer.php" ?>
