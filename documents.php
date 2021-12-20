@@ -174,11 +174,10 @@
 
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li>
-                                                            <button type="button" class="dropdown-item" id="editGroupButton"
-                                                                data-bs-toggle="modal" data-bs-target="#myModal"
+                                                            <button type="button" class="dropdown-item" id="editDocButton"
+                                                                data-bs-toggle="modal" data-bs-target="#editDocModal"
                                                                 data-name="<?= $document["document_name"] ?>"
                                                                 data-desc="<?= $document["document_desc"] ?>"
-                                                                data-groupid="<?= $document["group_id"] ?>"
                                                                 data-id="<?= $document["id"] ?>">
                                                                 Edit
                                                             </button>
@@ -250,12 +249,61 @@
     </div>
 </div>
 
+<!-- Modal Edit Document -->
+<div class="modal fade" id="editDocModal" tabindex="-1" aria-labelledby="editDocModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header px-4 border-0">
+                <h5 class="modal-title" id="editDocModalLabel">Edit Documents</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="includes/php/functionInstance.php" method="post">
+                <div class="modal-body px-4">
+                    <div class="mb-3">
+                        <label for="editName" class="form-label">Documents Name</label>
+                        <input type="text" name="editName" id="editName" class="form-control" maxlength="50" placeholder="Type new group name" autocomplete="off" required>
+                        <input type="number" name="docId" id="docId" hidden>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDescription" class="form-label">Description</label>
+                        <input type="text" name="editDescription" id="editDescription" class="form-control" maxlength="50" placeholder="Type description" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editGroup" class="form-label">To Group</label>
+                        <select type="text" name="editGroup" id="editGroup" class="form-select" required>
+                            <option value="">Choose</option>
+                            <?php foreach ($getGroups as $group) : ?>
+                                <option value="<?= $group['id'] ?>"><?= $group['group_name'] ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer px-4 border-0">
+                    <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" name="editDocument" id="editDocument" class="btn btn-1 px-3">
+                        Edit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script src="includes/js/scripts.js"></script>
 <script src="includes/js/admin.js"></script>
+<script>
+    $(document).on('click','#editDocButton', function(e) {
+        let id = $(this).data('id');
+        let name = $(this).data('name');
+        let desc = $(this).data('desc');
 
-    
+        $('#docId').val(id);
+        $('#editName').val(name);
+        $('#editDescription').val(desc);
+    });
+</script>
 <?php require "includes/php/footer.php" ?>

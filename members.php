@@ -114,7 +114,7 @@
                     <div class="col-sm col-lg">
                         <div class="d-flex justify-content-end">
                             <!-- Button trigger modal add member -->
-                            <button type="button" class="btn btn-light linkOrange700 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn bg-white linkOrange700 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="fas fa-plus"></i>
                                 Add
                             </button>

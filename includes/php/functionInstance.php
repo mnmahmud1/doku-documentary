@@ -105,8 +105,8 @@
     }
 
     if(isset($_POST["addDocument"])){
-        $name = $_POST['name'];
-        $description = $_POST['description'];
+        $name = htmlspecialchars(trim($_POST["name"]));
+        $description = htmlspecialchars(trim($_POST["description"]));
         $group = $_POST['group'];
         
         //! check id user from cookie value
@@ -140,5 +140,30 @@
 
         //! if user try to delete another users document
         setcookie("del", "documentFailed", time() + 5, "/");
+        header("Location: ../../documents.php");
+    }
+
+    if(isset($_POST["editDocument"])){
+        $name = htmlspecialchars(trim($_POST['editName']));
+        $description = htmlspecialchars(trim($_POST['editDescription']));
+        $group = $_POST['editGroup'];
+        $idEdit = $_POST['docId'];
+
+        //! check id user from cookie value
+        $checkUser = $_COOKIE["users"];
+        $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+        $idUser = $checkIdUser["id"];
+        
+        $checkIdUserDocument = mysqli_fetch_assoc(mysqli_query($conn, "SELECT user_id FROM documents WHERE id = $idEdit"));
+        $idUserDocument = $checkIdUserDocument["user_id"];
+        
+        if($idUser == $idUserDocument){
+            mysqli_query($conn, "UPDATE documents SET document_name = '$name', document_desc = '$description', group_id = $group WHERE id = $idEdit");
+            setcookie("edi", "documentSuccess", time() + 5, "/");
+            exit(header("Location: ../../documents.php"));
+        }
+
+        //! if user try to delete another users document
+        setcookie("edi", "documentFailed", time() + 5, "/");
         header("Location: ../../documents.php");
     }
