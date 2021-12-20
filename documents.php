@@ -8,13 +8,14 @@
                 window.location.href = 'signin.php';
             </script>
         ";
+        exit;
     }
 
     //! check id user from cookie value
     $checkUser = $_COOKIE["users"];
     $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
     $idUser = $checkIdUser["id"];
-
+    
     $getDocuments = mysqli_query($conn, "SELECT id, document_name, document_desc, group_id FROM documents WHERE user_id = $idUser");
     $getGroups = mysqli_query($conn, "SELECT id, group_name FROM groups WHERE user_id = $idUser");
 ?>

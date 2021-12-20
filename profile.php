@@ -1,6 +1,16 @@
 <?php $doc = ["title" => "Doku - Profile"] ?>
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
+<?php
+    if(!isset($_COOKIE["users"])){
+        echo "
+            <script>
+                window.location.href = 'signin.php';
+            </script>
+        ";
+        exit;
+    }
+?>
 
 <script src="https://kit.fontawesome.com/b676a664d2.js" crossorigin="anonymous"></script>
 <link href="includes/css/styles.css" rel="stylesheet" />

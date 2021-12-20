@@ -8,13 +8,14 @@
                 window.location.href = 'signin.php';
             </script>
         ";
+        exit;
     }
-
+    
     //! check id user from cookie value
     $checkUser = $_COOKIE["users"];
     $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
     $idUser = $checkIdUser["id"];
-    
+
     if(isset($_GET["tag"]) AND $_GET["tag"] != "all" ){
         $tag = $_GET["tag"];
         $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE group_id = $tag AND user_id = $idUser");
@@ -22,8 +23,8 @@
         $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE user_id = $idUser");
     }
 
-
     $getGroups = mysqli_query($conn, "SELECT id, group_name FROM groups WHERE user_id = $idUser");
+    
 ?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">

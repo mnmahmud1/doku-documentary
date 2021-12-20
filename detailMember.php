@@ -8,6 +8,7 @@
                 window.location.href = 'signin.php';
             </script>
         ";
+        exit;
     }
 ?>
 

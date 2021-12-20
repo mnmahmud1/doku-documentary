@@ -14,8 +14,9 @@
     $checkUser = $_COOKIE["users"];
     $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
     $idUser = $checkIdUser["id"];
-
+    
     $getGroups = mysqli_query($conn, "SELECT id, group_name FROM groups WHERE user_id = $idUser");
+
 ?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
