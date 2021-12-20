@@ -9,6 +9,21 @@
             </script>
         ";
     }
+
+    //! check id user from cookie value
+    $checkUser = $_COOKIE["users"];
+    $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+    $idUser = $checkIdUser["id"];
+    
+    if(isset($_GET["tag"]) AND $_GET["tag"] != "all" ){
+        $tag = $_GET["tag"];
+        $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE group_id = $tag AND user_id = $idUser");
+    } elseif(!isset($_GET["tag"]) || $_GET["tag"] == "all") {
+        $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE user_id = $idUser");
+    }
+
+
+    $getGroups = mysqli_query($conn, "SELECT id, group_name FROM groups WHERE user_id = $idUser");
 ?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
@@ -41,6 +56,36 @@
         </li>
     </ul>
 </nav>
+
+<!-- Toast Notification -->
+<?php if(isset($_COOKIE["add"]) || isset($_COOKIE["del"]) || isset($_COOKIE["edi"])) : ?>
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="position-absolute top-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong class="me-auto">Doku</strong>
+                    <small>Now</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <?php if(isset($_COOKIE["add"]) && $_COOKIE["add"] == "memberSuccess") : ?>
+                        <strong class="text-success">Successfully</strong> add new member.
+                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "memberSuccess") : ?>
+                        <strong class="text-success">Successfully</strong> delete member.
+                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "memberFailed") : ?>
+                        <strong  class="text-danger">Failed</strong> to delete member. Please try again!
+                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "memberSuccess") : ?>
+                        <strong  class="text-success">Successfully</strong> edit member.
+                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "memberFailed") : ?>
+                        <strong  class="text-danger">Failed</strong> to edit member. Please try again!
+                    <?php endif ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif ?>
+
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -97,12 +142,13 @@
                 <div class="row">
                     <!-- Content -->
                     <div class="col-sm-4 col-md-8 col-lg-5 mb-3">
-                        <form action="" method="post">
+                        <form action="" method="GET">
                             <div class="d-flex">
-                                <select name="groups" id="groups" required class="form-select me-3">
-                                    <option value="">All Groups</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                <select name="tag" id="tag" class="form-select me-3" required>
+                                    <option value="all">All Groups</option>
+                                    <?php foreach ($getGroups as $group) : ?>
+                                        <option value="<?= $group['id'] ?>"><?= $group['group_name'] ?></option>
+                                    <?php endforeach ?>
                                 </select>
                                 <button type="submit" class="btn btn-1 me-3">Set</button>
                                 <button type="button" onclick="print()" class="btn bg-white linkOrange700">
@@ -128,7 +174,7 @@
 
                 <div class="card shadow mt-3 mb-3 py-3">
                     <div class="card-body px-4">
-                        <table id="memberData" class="display table-responsive">
+                        <table id="memberData" class="stripe hover row-border table-responsive">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -139,26 +185,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>AHJB72</td>
-                                    <td>Row 1 Data 2</td>
-                                    <td>Row 1 Data 2</td>
-                                    <td>
-                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Detail</button>
-                                        <button onclick="return alertModal('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>ASD123</td>
-                                    <td>Row 2 Data 1</td>
-                                    <td>Row 2 Data 1</td>
-                                    <td>
-                                        <button onclick="return window.location.href='detailMember.php'" class="btn btn-sm btn-outline-primary">Detail</button>
-                                        <button onclick="return alertModal('detailMember.php')" class="btn btn-sm text-danger">Delete</button>
-                                    </td>
-                                </tr>
+                                <?php $i = 1; foreach ($getMember as $member) : ?>
+                                    <tr>
+                                        <td><?= $i++ ?></td>
+                                        <td><?= $member["member_code"] ?></td>
+                                        <td><?= $member["member_name"] ?></td>
+                                        <td>Row 1 Data 2</td>
+                                        <td>
+                                            <div class="dropend">
+                                                <button class="btn btn-white btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li>
+                                                        <button type="button" class="dropdown-item" id="editDocButton"
+                                                            data-bs-toggle="modal" data-bs-target="#editDocModal"
+                                                            data-name=""
+                                                            data-desc=""
+                                                            data-id="">
+                                                            Edit
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button onclick="return alertModal('includes/php/functionInstance.php?delDocument=*****')" class="dropdown-item">
+                                                            Delete
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach ?>
                             </tbody>
                         </table>
                     </div>
@@ -184,7 +242,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add Member</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="functionAdmin.php" method="post">
+            <form action="includes/php/functionInstance.php" method="post">
                 <div class="modal-body px-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -194,8 +252,9 @@
                         <label for="group" class="form-label">Group</label>
                         <select name="group" id="group" class="form-select" required>
                             <option value="">Choose</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                            <?php foreach ($getGroups as $group) : ?>
+                                <option value="<?= $group['id'] ?>"><?= $group['group_name'] ?></option>
+                            <?php endforeach ?>
                         </select>
                     </div>
                 </div>

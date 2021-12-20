@@ -167,3 +167,32 @@
         setcookie("edi", "documentFailed", time() + 5, "/");
         header("Location: ../../documents.php");
     }
+
+    if(isset($_POST["addMember"])){
+        $name = htmlspecialchars(trim(strtoupper($_POST['name'])));
+        $group = $_POST['group'];
+
+        function randomString($length){
+            $str        = "";
+            $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            $max        = strlen($characters) - 1;
+            for ($i = 0; $i < $length; $i++) {
+                $rand = mt_rand(0, $max);
+                $str .= $characters[$rand];
+            }
+            return $str;
+        }
+
+        $memberCode = randomString(6);
+
+        //! check id user from cookie value
+        $checkUser = $_COOKIE["users"];
+        $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+        $idUser = $checkIdUser["id"];
+
+        mysqli_query($conn, "INSERT INTO members (member_code, member_name, group_id, user_id) VALUES('$memberCode', '$name', $group, $idUser)");
+        if(mysqli_affected_rows($conn)){
+            setcookie("add", "memberSuccess", time() + 5, "/");
+            header("Location: ../../members.php");
+        }
+    }
