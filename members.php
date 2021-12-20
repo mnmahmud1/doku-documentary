@@ -175,51 +175,53 @@
 
                 <div class="card shadow mt-3 mb-3 py-3">
                     <div class="card-body px-4">
-                        <table id="memberData" class="stripe hover row-border table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>Document Details</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1; foreach ($getMember as $member) : ?>
+                        <div class="table-responsive">
+                            <table id="memberData" class="stripe hover row-border table-responsive">
+                                <thead>
                                     <tr>
-                                        <td><?= $i++ ?></td>
-                                        <td><?= $member["member_code"] ?></td>
-                                        <td><?= $member["member_name"] ?></td>
-                                        <td>Row 1 Data 2</td>
-                                        <td>
-                                            <div class="dropend">
-                                                <button class="btn btn-white btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-h"></i>
-                                                </button>
-
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li>
-                                                        <button type="button" class="dropdown-item" id="editDocButton"
-                                                            data-bs-toggle="modal" data-bs-target="#editDocModal"
-                                                            data-name=""
-                                                            data-desc=""
-                                                            data-id="">
-                                                            Edit
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button onclick="return alertModal('includes/php/functionInstance.php?delDocument=*****')" class="dropdown-item">
-                                                            Delete
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
+                                        <th>#</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Document Details</th>
+                                        <th>Action</th>
                                     </tr>
-                                <?php endforeach ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1; foreach ($getMember as $member) : ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $member["member_code"] ?></td>
+                                            <td><?= $member["member_name"] ?></td>
+                                            <td>Row 1 Data 2</td>
+                                            <td>
+                                                <div class="dropend">
+                                                    <button class="btn btn-white btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-h"></i>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li>
+                                                            <button type="button" class="dropdown-item" id="editDocButton"
+                                                                data-bs-toggle="modal" data-bs-target="#editDocModal"
+                                                                data-name=""
+                                                                data-desc=""
+                                                                data-id="">
+                                                                Edit
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button onclick="return alertModal('includes/php/functionInstance.php?delDocument=*****')" class="dropdown-item">
+                                                                Delete
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
