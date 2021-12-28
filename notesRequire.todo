@@ -2,6 +2,8 @@ TODO :
 - buat values cookie user dengan beberapa digit dari enc password user
 - base_url()
 - mysqli_affected_rows()
+- perbaiki dokument detail jika member berpindah group
+- melakukan enskripsi, misal "nama file" + id user
 
 
 SUCCESS :

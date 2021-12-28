@@ -196,3 +196,49 @@
             header("Location: ../../members.php");
         }
     }
+
+    if(isset($_GET["delMember"])){
+        $idMember = $_GET['delMember'];
+
+        //! check id user from cookie value
+        $checkUser = $_COOKIE["users"];
+        $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+        $idUser = $checkIdUser["id"];
+
+        $checkIdUserMember = mysqli_fetch_assoc(mysqli_query($conn, "SELECT user_id FROM members WHERE id = $idMember"));
+        $idUserMember = $checkIdUserMember["user_id"];
+        
+        if($idUser == $idUserMember){
+            mysqli_query($conn, "DELETE FROM members WHERE id = $idMember");
+            setcookie("del", "memberSuccess", time() + 5, "/");
+            exit(header("Location: ../../members.php"));
+        }
+
+        //! if user try to delete another users member
+        setcookie("del", "memberFailed", time() + 5, "/");
+        header("Location: ../../members.php");
+    }
+
+    if(isset($_POST["editMember"])){
+        $name = htmlspecialchars(trim($_POST['editName']));
+        $idEdit = $_POST['idEdit'];
+        $group = $_POST['editGroup'];
+
+        //! check id user from cookie value
+        $checkUser = $_COOKIE["users"];
+        $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+        $idUser = $checkIdUser["id"];
+        
+        $checkIdUserMember = mysqli_fetch_assoc(mysqli_query($conn, "SELECT user_id FROM members WHERE id = $idEdit"));
+        $idUserMember = $checkIdUserMember["user_id"];
+        
+        if($idUser == $idUserMember){
+            mysqli_query($conn, "UPDATE members SET member_name = '$name', group_id = '$group' WHERE id = $idEdit");
+            setcookie("edi", "memberSuccess", time() + 5, "/");
+            exit(header("Location: ../../members.php"));
+        }
+
+        //! if user try to delete another users member
+        setcookie("edi", "memberFailed", time() + 5, "/");
+        header("Location: ../../members.php");
+    }

@@ -16,12 +16,18 @@
     $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
     $idUser = $checkIdUser["id"];
 
-    if(isset($_GET["tag"]) AND $_GET["tag"] != "all" ){
+    if(isset($_GET["tag"]) && $_GET["tag"] != "all" ){
         $tag = $_GET["tag"];
-        $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE group_id = $tag AND user_id = $idUser");
+        $checkGroup = mysqli_query($conn, "SELECT id FROM members WHERE group_id = '$tag' AND user_id = $idUser");
+        
+        if(mysqli_num_rows($checkGroup) > 0){
+            $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE group_id = $tag AND user_id = $idUser");
+        } else {
+            $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE user_id = $idUser");
+        }
     } elseif(!isset($_GET["tag"]) || $_GET["tag"] == "all") {
         $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE user_id = $idUser");
-    }
+    } 
 
     $getGroups = mysqli_query($conn, "SELECT id, group_name FROM groups WHERE user_id = $idUser");
     
@@ -151,7 +157,7 @@
                                         <option value="<?= $group['id'] ?>"><?= $group['group_name'] ?></option>
                                     <?php endforeach ?>
                                 </select>
-                                <button type="submit" class="btn btn-1 me-3">Set</button>
+                                <button type="submit" class="btn btn-1 me-3 rounded">Set</button>
                                 <button type="button" onclick="print()" class="btn bg-white linkOrange700">
                                     <i class="fas fa-print"></i>
                                 </button>
@@ -165,10 +171,15 @@
                                 <i class="fas fa-plus"></i>
                                 Add
                             </button>
-                            <button type="button" id="importMember" class="btn bg-white linkOrange700">
-                                <i class="fas fa-file-import"></i>
-                                Imports
-                            </button>
+                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                <button type="button" id="importMember" class="btn bg-white linkOrange700">
+                                    <i class="fas fa-file-import"></i>
+                                    Imports
+                                </button>
+                                <a href="#" class="btn btn-1 rounded-end" download>
+                                <i class="fas fa-download"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -201,16 +212,15 @@
 
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li>
-                                                            <button type="button" class="dropdown-item" id="editDocButton"
-                                                                data-bs-toggle="modal" data-bs-target="#editDocModal"
-                                                                data-name=""
-                                                                data-desc=""
-                                                                data-id="">
+                                                            <button type="button" class="dropdown-item" id="editMemberButton"
+                                                                data-bs-toggle="modal" data-bs-target="#editMemberModal"
+                                                                data-name="<?= $member ['member_name'] ?>"
+                                                                data-id="<?= $member ['id'] ?>">
                                                                 Edit
                                                             </button>
                                                         </li>
                                                         <li>
-                                                            <button onclick="return alertModal('includes/php/functionInstance.php?delDocument=*****')" class="dropdown-item">
+                                                            <button onclick="return alertModal('includes/php/functionInstance.php?delMember=<?= $member['id'] ?>')" class="dropdown-item">
                                                                 Delete
                                                             </button>
                                                         </li>
@@ -272,9 +282,54 @@
     </div>
 </div>
 
+<!-- Modal Edit User -->
+<div class="modal fade" id="editMemberModal" tabindex="-1" aria-labelledby="editMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header px-4 border-0">
+                <h5 class="modal-title" id="editMemberModalLabel">Edit Member</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="includes/php/functionInstance.php" method="post">
+                <div class="modal-body px-4">
+                    <div class="mb-3">
+                        <label for="editName" class="form-label">Name</label>
+                        <input type="text" name="editName" id="editName" class="form-control" maxlength="50" placeholder="Type new member name" autocomplete="off" required>
+                        <input type="text" name="idEdit" id="idEdit" hidden>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editGroup" class="form-label">Group</label>
+                        <select name="editGroup" id="editGroup" class="form-select" required>
+                            <option value="">Choose</option>
+                            <?php foreach ($getGroups as $group) : ?>
+                                <option value="<?= $group['id'] ?>"><?= $group['group_name'] ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer px-4 border-0">
+                    <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" name="editMember" id="editMember" class="btn btn-1 px-3">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script src="includes/js/scripts.js"></script>
 <script src="includes/js/admin.js"></script>
+<script>
+    $(document).on('click','#editMemberButton', function(e) {
+        let id = $(this).data('id');
+        let name = $(this).data('name');
+
+        $('#idEdit').val(id);
+        $('#editName').val(name);
+    });
+</script>
 <?php require "includes/php/footer.php" ?>

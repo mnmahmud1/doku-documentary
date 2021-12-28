@@ -282,7 +282,7 @@
                 <div class="modal-footer px-4 border-0">
                     <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" name="editDocument" id="editDocument" class="btn btn-1 px-3">
-                        Edit
+                        Save Changes
                     </button>
                 </div>
             </form>
