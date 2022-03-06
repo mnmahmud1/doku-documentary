@@ -242,3 +242,61 @@
         setcookie("edi", "memberFailed", time() + 5, "/");
         header("Location: ../../members.php");
     }
+
+    if(isset($_POST["addValidator"])){
+        $name = $_POST['name'];
+
+        //! check id user from cookie value
+        $checkUser = $_COOKIE["users"];
+        $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+        $idUser = $checkIdUser["id"];
+
+        mysqli_query($conn, "INSERT INTO validators VALUES('', '$name', $idUser)");
+        setcookie("add", "validatorSuccess", time() + 5, "/");
+        header("Location: ../../validators.php");
+    }
+
+    if(isset($_GET["delValidator"])){
+        $idValidator = $_GET['delValidator'];
+
+        //! check id user from cookie value
+        $checkUser = $_COOKIE["users"];
+        $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+        $idUser = $checkIdUser["id"];
+
+        $checkIdUserValidator = mysqli_fetch_assoc(mysqli_query($conn, "SELECT user_id FROM validators WHERE id = $idValidator"));
+        $idUserValidator = $checkIdUserValidator["user_id"];
+        
+        if($idUser == $idUserValidator){
+            mysqli_query($conn, "DELETE FROM validators WHERE id = $idValidator");
+            setcookie("del", "validatorSuccess", time() + 5, "/");
+            exit(header("Location: ../../validators.php"));
+        }
+
+        //! if user try to delete another users validator
+        setcookie("del", "validatorFailed", time() + 5, "/");
+        header("Location: ../../validators.php");
+    }
+
+    if(isset($_POST["editValidator"])){
+        $nameEdit = trim(htmlspecialchars($_POST['nameEdit']));
+        $idEdit = trim(htmlspecialchars($_POST['idEdit']));
+
+        //! check id user from cookie value
+        $checkUser = $_COOKIE["users"];
+        $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+        $idUser = $checkIdUser["id"];
+
+        $checkIdUserValidator = mysqli_fetch_assoc(mysqli_query($conn, "SELECT user_id FROM validators WHERE id = $idEdit"));
+        $idUserValidator = $checkIdUserValidator["user_id"];
+        
+        if($idUser == $idUserValidator){
+            mysqli_query($conn, "UPDATE validators SET validator_name = '$nameEdit' WHERE id = $idEdit");
+            setcookie("edi", "validatorSuccess", time() + 5, "/");
+            exit(header("Location: ../../validators.php"));
+        }
+
+        //! if user try to delete another users group
+        setcookie("edi", "validatorFailed", time() + 5, "/");
+        header("Location: ../../validators.php");
+    }

@@ -64,6 +64,7 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="groups.php">Groups</a>
                             <a class="nav-link" href="documents.php">Documents</a>
+                            <a class="nav-link" href="validators.php">Validator</a>
                         </nav>
                     </div>
                     <a class="nav-link" href="#">

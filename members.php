@@ -117,6 +117,7 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="groups.php">Groups</a>
                             <a class="nav-link" href="documents.php">Documents</a>
+                            <a class="nav-link" href="validators.php">Validators</a>
                         </nav>
                     </div>
                     <a class="nav-link" href="#">
@@ -201,7 +202,7 @@
                                     <?php $i = 1; foreach ($getMember as $member) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $member["member_code"] ?></td>
+                                            <td class="fw-bold"><?= $member["member_code"] ?></td>
                                             <td><?= $member["member_name"] ?></td>
                                             <td>Row 1 Data 2</td>
                                             <td>

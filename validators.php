@@ -1,4 +1,4 @@
-<?php $doc = ["title" => "Doku - Groups"] ?>
+<?php $doc = ["title" => "Doku - Validator"] ?>
 <?php require "includes/php/header.php" ?>
 <?php require "includes/php/conn.php" ?>
 <?php
@@ -15,7 +15,7 @@
     $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
     $idUser = $checkIdUser["id"];
     
-    $getGroups = mysqli_query($conn, "SELECT id, group_name FROM groups WHERE user_id = $idUser");
+    $getValidators = mysqli_query($conn, "SELECT id, validator_name FROM validators WHERE user_id = $idUser");
 
 ?>
 
@@ -64,16 +64,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body">
-                    <?php if(isset($_COOKIE["add"]) && $_COOKIE["add"] == "groupSuccess") : ?>
-                        <strong class="text-success">Successfully</strong> add new group.
-                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "groupSuccess") : ?>
-                        <strong class="text-success">Successfully</strong> delete group.
-                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "groupFailed") : ?>
-                        <strong  class="text-danger">Failed</strong> to delete group. Please try again!
-                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "groupSuccess") : ?>
-                        <strong  class="text-success">Successfully</strong> edit group.
-                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "groupFailed") : ?>
-                        <strong  class="text-danger">Failed</strong> to edit group. Please try again!
+                    <?php if(isset($_COOKIE["add"]) && $_COOKIE["add"] == "validatorSuccess") : ?>
+                        <strong class="text-success">Successfully</strong> add new validator.
+                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "validatorSuccess") : ?>
+                        <strong class="text-success">Successfully</strong> delete validator.
+                    <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "validatorFailed") : ?>
+                        <strong  class="text-danger">Failed</strong> to delete validator. Please try again!
+                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "validatorSuccess") : ?>
+                        <strong  class="text-success">Successfully</strong> edit validator.
+                    <?php elseif(isset($_COOKIE["edi"]) && $_COOKIE["edi"] == "validatorFailed") : ?>
+                        <strong  class="text-danger">Failed</strong> to edit validator. Please try again!
                     <?php endif ?>
                 </div>
             </div>
@@ -103,9 +103,9 @@
                     </a>
                     <div class="collapse show" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link active" href="groups.php">Groups</a>
+                            <a class="nav-link" href="groups.php">Groups</a>
                             <a class="nav-link" href="documents.php">Documents</a>
-                            <a class="nav-link" href="validators.php">Validators</a>
+                            <a class="nav-link active" href="validators.php">Validator</a>
                         </nav>
                     </div>
                     <a class="nav-link" href="#">
@@ -124,11 +124,11 @@
         <main>
             <div class="container-fluid px-4">
                 <div class="row">
-                    <h2 class="mt-5 fw-bold">Groups</h2>
+                    <h2 class="mt-5 fw-bold">Validator</h2>
                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">Dashboard</li>
-                            <li class="breadcrumb-item active" aria-current="page">Groups</li>
+                            <li class="breadcrumb-item active" aria-current="page">Validator</li>
                         </ol>
                     </nav>
                 </div>
@@ -157,13 +157,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 1; foreach($getGroups as $group) : ?>
+                                    <?php $i = 1; foreach($getValidators as $validator) : ?>
                                         <?php
-                                            $id = $group["id"];
+                                            $id = $validator["id"];
                                         ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $group["group_name"] ?></td>
+                                            <td><?= $validator["validator_name"] ?></td>
                                             <td>
                                                 <div class="dropend">
                                                     <button class="btn btn-white btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -172,15 +172,15 @@
 
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li>
-                                                            <button type="button" class="dropdown-item" id="editGroupButton"
+                                                            <button type="button" class="dropdown-item" id="editValidatorButton"
                                                                 data-bs-toggle="modal" data-bs-target="#myModal"
-                                                                data-name="<?= $group["group_name"] ?>"
-                                                                data-id="<?= $group["id"] ?>">
+                                                                data-name="<?= $validator["validator_name"] ?>"
+                                                                data-id="<?= $validator["id"] ?>">
                                                                 Edit
                                                             </button>
                                                         </li>
                                                         <li>
-                                                            <button onclick="return alertModal('includes/php/functionInstance.php?delGroup=<?= $id ?>')" class="dropdown-item">
+                                                            <button onclick="return alertModal('includes/php/functionInstance.php?delValidator=<?= $id ?>')" class="dropdown-item">
                                                                 Delete
                                                             </button>
                                                         </li>
@@ -207,24 +207,24 @@
 </div>
 
 
-<!-- Modal Add Group -->
+<!-- Modal Add Validator -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header px-4 border-0">
-                <h5 class="modal-title" id="exampleModalLabel">Add Group</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Validator</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="includes/php/functionInstance.php" method="post">
                 <div class="modal-body px-4">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Group Name</label>
-                        <input type="text" name="name" id="name" class="form-control" maxlength="50" placeholder="Type new group name" required>
+                        <label for="name" class="form-label">Validator Name</label>
+                        <input type="text" name="name" id="name" class="form-control" maxlength="50" placeholder="Type new validator name" required>
                     </div>
                 </div>
                 <div class="modal-footer px-4 border-0">
                     <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="addGroup" id="addGroup" class="btn btn-1 px-3">
+                    <button type="submit" name="addValidator" id="addValidator" class="btn btn-1 px-3">
                         Add
                     </button>
                 </div>
@@ -233,25 +233,25 @@
     </div>
 </div>
 
-<!-- Modal Edit Group -->
+<!-- Modal Edit Validator -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header px-4 border-0">
-                <h5 class="modal-title" id="myModalLabel">Edit Group</h5>
+                <h5 class="modal-title" id="myModalLabel">Edit Validator</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="includes/php/functionInstance.php" method="post">
                 <div class="modal-body px-4">
                     <div class="mb-3">
-                        <label for="nameEdit" class="form-label">Group Name</label>
-                        <input type="text" name="nameEdit" id="nameEdit" class="form-control" maxlength="50" placeholder="Edit group name" required>
+                        <label for="nameEdit" class="form-label">Validator Name</label>
+                        <input type="text" name="nameEdit" id="nameEdit" class="form-control" maxlength="50" placeholder="Edit validator name" required>
                         <input type="number" name="idEdit" id="idEdit" hidden>
                     </div>
                 </div>
                 <div class="modal-footer px-4 border-0">
                     <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="editGroup" id="editGroup" class="btn btn-1 px-3">
+                    <button type="submit" name="editValidator" id="editValidator" class="btn btn-1 px-3">
                         Save Changes
                     </button>
                 </div>
@@ -266,7 +266,7 @@
 <script src="includes/js/scripts.js"></script>
 <script src="includes/js/admin.js"></script>
 <script>
-    $(document).on("click", "#editGroupButton", function (e) {
+    $(document).on("click", "#editValidatorButton", function (e) {
         let id = $(this).data("id");
         let name = $(this).data("name");
         
