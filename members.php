@@ -16,16 +16,18 @@
     $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
     $idUser = $checkIdUser["id"];
 
-    if(isset($_GET["tag"]) && $_GET["tag"] != "all" ){
+
+    // get member from group tag
+    if(isset($_GET["tag"]) && $_GET["tag"] !== "all" ){
         $tag = $_GET["tag"];
         $checkGroup = mysqli_query($conn, "SELECT id FROM members WHERE group_id = '$tag' AND user_id = $idUser");
         
-        if(mysqli_num_rows($checkGroup) > 0){
+        // if(mysqli_num_rows($checkGroup) > 0){
             $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE group_id = $tag AND user_id = $idUser");
-        } else {
-            $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE user_id = $idUser");
-        }
-    } elseif(!isset($_GET["tag"]) || $_GET["tag"] == "all") {
+        // } else {
+        //     $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE user_id = $idUser");
+        // }
+    } elseif(!isset($_GET["tag"]) || $_GET["tag"] === "all") {
         $getMember = mysqli_query($conn, "SELECT id, member_code, member_name FROM members WHERE user_id = $idUser");
     } 
 
@@ -78,6 +80,8 @@
                 <div class="toast-body">
                     <?php if(isset($_COOKIE["add"]) && $_COOKIE["add"] == "memberSuccess") : ?>
                         <strong class="text-success">Successfully</strong> add new member.
+                    <?php elseif(isset($_COOKIE["add"]) && $_COOKIE["add"] == "import") : ?>
+                        <strong class="text-success">Successfully</strong> add <?= $_COOKIE["import"] ?> new member.
                     <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "memberSuccess") : ?>
                         <strong class="text-success">Successfully</strong> delete member.
                     <?php elseif(isset($_COOKIE["del"]) && $_COOKIE["del"] == "memberFailed") : ?>
@@ -173,11 +177,11 @@
                                 Add
                             </button>
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                <button type="button" id="importMember" class="btn bg-white linkOrange700">
+                                <button type="button" id="importMember" class="btn bg-white linkOrange700" data-bs-toggle="modal" data-bs-target="#importModal">
                                     <i class="fas fa-file-import"></i>
                                     Imports
                                 </button>
-                                <a href="#" class="btn btn-1 rounded-end" download>
+                                <a href="includes/php/Temp-Excel.xls" class="btn btn-1 rounded-end" download>
                                 <i class="fas fa-download"></i>
                                 </a>
                             </div>
@@ -204,7 +208,9 @@
                                             <td><?= $i++ ?></td>
                                             <td class="fw-bold"><?= $member["member_code"] ?></td>
                                             <td><?= $member["member_name"] ?></td>
-                                            <td>Row 1 Data 2</td>
+                                            <td>
+                                                <button >Details</button>
+                                            </td>
                                             <td>
                                                 <div class="dropend">
                                                     <button class="btn btn-white btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -312,6 +318,32 @@
                     <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" name="editMember" id="editMember" class="btn btn-1 px-3">
                         Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add User via import -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header px-4 border-0">
+                <h5 class="modal-title" id="importModalLabel">Import Member</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="includes/php/functionInstance.php" enctype="multipart/form-data" method="post">
+                <div class="modal-body px-4">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Upload Excel File</label>
+                        <input type="file" name="excel" id="excel" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer px-4 border-0">
+                    <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" name="importMember" id="importMember" class="btn btn-1 px-3">
+                        Upload
                     </button>
                 </div>
             </form>

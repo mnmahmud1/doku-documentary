@@ -1,6 +1,7 @@
 <?php 
 
     include "conn.php";
+    include "excel_reader2.php";
 
     if(isset($_POST['signin'])){
         $username = trim(htmlspecialchars($_POST['username']));
@@ -184,6 +185,11 @@
         }
 
         $memberCode = randomString(6);
+        
+        // $checkRandomString = mysqli_query($conn, "SELECT id FROM members WHERE member_code = '$memberCode'");
+        // while(mysqli_num_rows($checkValidString) < 0){
+        //     $memberCode = randomString(6);
+        // }
 
         //! check id user from cookie value
         $checkUser = $_COOKIE["users"];
@@ -299,4 +305,62 @@
         //! if user try to delete another users group
         setcookie("edi", "validatorFailed", time() + 5, "/");
         header("Location: ../../validators.php");
+    }
+
+    if(isset($_POST["importMember"])){
+        //upload
+        $target = basename($_FILES['excel']['name']);
+        move_uploaded_file($_FILES['excel']['tmp_name'], $target);
+
+        //permission
+        chmod($_FILES['excel']['name'], 0777);
+
+        //ambil xls
+        $data = new Spreadsheet_Excel_Reader($_FILES['excel']['name']);
+
+        //hitung jumlah baris
+        $jmlBaris = $data->rowcount($sheet_index=0);
+        
+        //! check id user from cookie value
+        $checkUser = $_COOKIE["users"];
+        $checkIdUser = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE username = '$checkUser'"));
+        $idUser = $checkIdUser["id"];
+
+        function randomString($length){
+            $str        = "";
+            $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            $max        = strlen($characters) - 1;
+            for ($i = 0; $i < $length; $i++) {
+                $rand = mt_rand(0, $max);
+                $str .= $characters[$rand];
+            }
+            return $str;
+        }
+
+        //jml default berhasil di import
+        $berhasil = 0;
+        for($i=2; $i <= $jmlBaris; $i++){
+    
+            $memberCode = randomString(6);
+
+            //menangkap data ke var sesuai column
+            $name = $data->val($i, 1);
+            $groupId = $data->val($i, 2);
+
+            //input data ke database
+            mysqli_query($conn, "INSERT INTO members (member_code, member_name, group_id, user_id) VALUES('$memberCode', '$name', $groupId, $idUser)");
+            $berhasil++;
+        }
+
+        //hapus file xls
+        unlink($_FILES['excel']['name']);
+
+        if(mysqli_affected_rows($conn)){
+            setcookie("add", "import", time() + 5, "/");
+            setcookie("import", $berhasil, time() + 5, "/");
+            header("Location: ../../members.php");
+        }
+
+        //* buat tombol HAPUS MEMBER yang id nya tidak ada di sistem dengan user yang meng-import
+
     }

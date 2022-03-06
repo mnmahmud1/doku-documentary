@@ -152,6 +152,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>ID</th>
                                         <th>Name</th>
                                         <th>Action</th>
                                     </tr>
@@ -163,6 +164,7 @@
                                         ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
+                                            <td><?= $group["id"] ?></td>
                                             <td><?= $group["group_name"] ?></td>
                                             <td>
                                                 <div class="dropend">
