@@ -53,3 +53,12 @@
     background-color: #fef3f2;
     color: #b42318;
 }
+
+.label-success {
+    background-color: #ebf9f4;
+    padding: 2px;
+    font-size: 12px;
+    color: #2fb182;
+    border-radius: 5px;
+    font-weight: bold;
+}

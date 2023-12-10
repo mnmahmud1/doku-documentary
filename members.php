@@ -192,26 +192,40 @@
                 <div class="card shadow mt-3 mb-3 py-3">
                     <div class="card-body px-4">
                         <div class="table-responsive">
-                            <table id="memberData" class="stripe hover row-border table-responsive">
+                            <table id="memberData" class="hover table-responsive">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>#</th>
                                         <th>Code</th>
                                         <th>Name</th>
-                                        <th>Document Details</th>
+                                        <th>Document</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $i = 1; foreach ($getMember as $member) : ?>
                                         <tr>
-                                            <td><?= $i++ ?></td>
-                                            <td class="fw-bold"><?= $member["member_code"] ?></td>
+                                            <td class="text-center"><?= $i++ ?></td>
+                                            <td class="text-center fw-bold"><?= $member["member_code"] ?></td>
                                             <td><?= $member["member_name"] ?></td>
-                                            <td>
-                                                <button >Details</button>
+                                            <td class="text-center">
+                                                <button onclick="return window.location.href='detailMember.php'">See Details</button>
                                             </td>
-                                            <td>
+                                            <td class="text-center">
+                                                <!-- icon document complete -->
+                                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                </svg> -->
+                                                <!-- icon document incomplete -->
+                                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill  text-danger" viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                </svg> -->
+                                                <div class="label-success">
+                                                    Complete
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
                                                 <div class="dropend">
                                                     <button class="btn btn-white btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-h"></i>
@@ -339,7 +353,7 @@
                         <label for="name" class="form-label">Upload Excel File</label>
                         <input type="file" name="excel" id="excel" class="form-control" required>
                     </div>
-                </div>
+                </div>`
                 <div class="modal-footer px-4 border-0">
                     <button type="button" class="btn btn-2 me-3" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" name="importMember" id="importMember" class="btn btn-1 px-3">

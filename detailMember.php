@@ -143,7 +143,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-2 me-4" onclick="window.location.href = 'members.php'">Cancel</button>
+                            <button type="button" class="btn btn-2 me-4" onclick="window.location.href = 'members.php'">Back</button>
                             <button type="submit" class="btn btn-1">Save Changes</button>
                         </div>
 
